@@ -1,6 +1,7 @@
 <?php
 
     include_once("interfaces/crud.php");
+    include_once("classes/DB.class.php");
 
 class Produto implements crud{
     protected $id;
@@ -8,6 +9,23 @@ class Produto implements crud{
     protected $categoria_id;
     protected $preco;
     protected $quant;
+
+    public function __construct($id=false){
+        if($id){
+            $sql = "SELECT * FROM produtos where id = ?";
+            $conexao = DB::conexao();
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindParam(1, $id, PDO::PARAM_INT);
+            $stmt->execute();
+            foreach($stmt as $obj){
+                $this->setId($obj['id']);
+                $this->setNome($obj['nome']);
+                $this->setCategoria($obj['categoria_id']);
+                $this->setPreco($obj['preco']);
+                $this->setQuantidade($obj['quantidade']);
+            }
+        }
+    }
 
     public function setId($id){
         $this->id = $id;
@@ -37,18 +55,14 @@ class Produto implements crud{
         return $this->preco;
     }
 
-    public function setQuant($quant){
-        $this->quant = $quant;
+    public function setQuantidade($quantidade){
+        $this->quantidade = $quantidade;
     }
-    public function getQuant(){
-        return $this->quant;
+    public function getQuantidade(){
+        return $this->quantidade;
     }
 
-    public function __construct($id=false){
-        if($id){
-            echo "Testando o construtor";
-        }
-    }
+
 
     public function adicionar(){}    //C
     public function listar(){}       //R
