@@ -3,9 +3,8 @@
     include_once('classes/categoria.class.php');
 
     $categoria = new Categoria();
-    //echo "<pre>";
-    //print_r($categoria);
-    //echo "</pre>";
+    echo $produto->getId(). "<br>";
+    echo $produto->getNome(). "<br>";
 
     $produto = new Produto(2);
     echo $produto->getId(). "<br>";
