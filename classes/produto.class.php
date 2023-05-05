@@ -8,7 +8,7 @@ class Produto implements crud{
     protected $nome;
     protected $categoria_id;
     protected $preco;
-    protected $quant;
+    protected $quantidade;
 
     public function __construct($id=false){
         if($id){
@@ -62,10 +62,45 @@ class Produto implements crud{
         return $this->quantidade;
     }
 
+    public function adicionar(){    //C
+        $sql = "INSERT INTO produtos (categoria_id, nome, preco, quantidade)
+                VALUES (?, ?, ?, ?)";       
+                
+            try{        //try-catch serve como if else, só que usado pra tratar erros e mostrar só uma mensagem
+                $conexao = DB::conexao();
+                $stmt = $conexao->prepare($sql); //$stmt =  STATEMANT
+                $stmt->bindParam(1, $this->categoria_id);
+                $stmt->bindParam(2, $this->nome);
+                $stmt->bindParam(3, $this->preco);
+                $stmt->bindParam(4, $this->quantidade); //os numeros representam a ordem dos "?"
+                $stmt->execute();
+            }catch(PDOException $e){
+                echo "Erro na Função Adicionar Produto:" .$e->getMessage();
+            }
+            }  
 
 
-    public function adicionar(){}    //C
-    public function listar(){}       //R
+    public static function listar(){   //R
+        $sql = "SELECT * FROM produtos";
+        $conexao = DB::conexao();
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC); //os registros que vem do bd tá na $registros e o fetchall é o que traz os dados do bd
+        if($registros){
+                $objetos = array();   //foreach serve para tratar arrays, $objetos vai guardar e transformar para objetos
+                foreach($registros as $registro){  //esse foreach vai se repetir pra cada objeto, pegando todos os dados
+                    $temporario = new Produto();
+                    $temporario->setId($registro['id']);
+                    $temporario->setNome($registro['nome']);
+                    $temporario->setCategoria($registro['categoria_id']);
+                    $temporario->setPreco($registro['preco']);
+                    $temporario->setQuantidade($registro['quantidade']);
+                    $objetos[] = $temporario;
+                }
+            return $objetos;
+        }
+        return false;
+    }
     public function atualizar(){}    //U
     public function excluir(){}      //D
 

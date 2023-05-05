@@ -8,7 +8,8 @@
 
             try{ 
                 $conexao = new PDO(
-                    "mysql:host=localhost; dbname=crud", "root", ""
+                    "mysql:host=localhost; dbname=crud", 'root', '' //só decora essa sintaxe, são 3 parâmetros
+                    
                 );
                 
             }catch(PDOException $e){
@@ -17,6 +18,6 @@
             
             return $conexao;
         }
-    
+    // bd, método listar, excluir, adicionar(create) e classe padrão (get e set)
     }
 ?>
