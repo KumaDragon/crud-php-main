@@ -28,28 +28,29 @@ class Produto implements crud{
     }
 
     public function setId($id){
-        $this->id = $id;
+        $this -> id = $id;
     }
-    public function getId(){
-        return $this->id;
+    public function setCat($categoria_id){
+        $this -> categoria_id = $categoria_id;
     }
-
     public function setNome($nome){
-        $this->nome = $nome;
+        $this -> nome = $nome;
+    }
+    public function setPreco($preco){
+        $this -> preco = $preco;
+    }
+    public function setQuant($quantidade){
+        $this -> quantidade = $quantidade;
+    }
+    #getters
+    public function getId(){
+        return $this -> id;
+    }
+    public function getCat(){
+        return $this -> categoria_id;
     }
     public function getNome(){
-        return $this->nome;
-    }
-    
-    public function setCategoria($categoria_id){
-        $this->categoria_id = $categoria_id;
-    }
-    public function getCategoria(){
-        return $this->categoria_id;
-    }
-
-    public function setPreco($preco){
-        $this->preco = $preco;
+        return $this -> nome;
     }
     public function getPreco(){
         return $this->preco;
@@ -105,6 +106,3 @@ class Produto implements crud{
     public function excluir(){}      //D
 
 }
-
-
-?>

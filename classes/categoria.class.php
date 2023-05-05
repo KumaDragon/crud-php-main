@@ -22,16 +22,17 @@ class Categoria implements crud{
     }
 
     public function setId($id){
-        $this->id = $id;
-    }
-    public function getId(){
-        return $this->id;
+        $this -> id = $id;
     }
     public function setNome($nome){
-        $this->nome = $nome;
+        $this -> nome = $nome;
+    }
+
+    public function getId(){
+        return $this -> id;
     }
     public function getNome(){
-        return $this->nome;
+        return $this -> nome;
     }
 
     public function adicionar(){}    //C
@@ -39,4 +40,3 @@ class Categoria implements crud{
     public function atualizar(){}    //U
     public function excluir(){}      //D
 }
-?>
