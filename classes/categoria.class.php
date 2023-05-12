@@ -35,8 +35,54 @@ class Categoria implements crud{
         return $this -> nome;
     }
 
-    public function adicionar(){}    //C
-    public static function listar(){}       //R
-    public function atualizar(){}    //U
-    public function excluir(){}      //D
+    public function adicionar(){    //C
+        $sql = "INSERT INTO categorias (nome)
+                VALUES (:nome)";       
+                
+            try{        //try-catch serve como if else, só que usado pra tratar erros e mostrar só uma mensagem
+                $conexao = DB::conexao();
+                $stmt = $conexao->prepare($sql); //$stmt =  STATEMANT
+                $stmt->bindParam(':nome',$this->nome);
+                $stmt->execute();
+            }catch(PDOException $e){
+                echo "Erro na Função Adicionar categoria:" .$e->getMessage();
+            }
+            }
+    public static function listar(){   //R
+        $sql = "SELECT * FROM categorias";
+        $conexao = DB::conexao();
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute();
+        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if($registros){
+                $objetos = array();  
+                foreach($registros as $registro){  
+                    $temporario = new Categoria();
+                    $temporario->setId($registro['id']);
+                    $temporario->setNome($registro['nome']);
+                    $objetos[] = $temporario;
+                }
+            return $objetos;
+        }
+        return false;
+    }
+    -
+    public function atualizar(){            //UPDATE
+        if($this->id){
+            $slq = "UPDATE categorias SET nome = :nome WHERE id = :id"; //Essa é uma outra forma de fazer, tirando os "?" porém funciona do msm jeito
+            $stmt = DB::conexao()->prepare($sql);
+            $stmt->bindParam(':nome', $this->nome);
+            $stmt->bindParam(':id', $this->id);
+            $stmt->execute();
+        }
+    }
+
+    public function excluir(){ //DELETE
+        if($this->id){
+            $sql = "DELETE FROM categorias WHERE id = :id";
+            $stmt = DB::conexao()->prepare($sql);
+            $stmt->bindParam(':id', $this->id);
+            $stmt->execute();
+        }
+    } 
 }

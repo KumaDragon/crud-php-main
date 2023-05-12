@@ -30,34 +30,29 @@ class Produto implements crud{
     public function setId($id){
         $this -> id = $id;
     }
-    public function setCat($categoria_id){
+    public function getId(){
+        return $this -> id;
+    }
+    public function setCategoria($categoria_id){
         $this -> categoria_id = $categoria_id;
+    }
+    public function getCategoria(){
+        return $this -> categoria_id;
     }
     public function setNome($nome){
         $this -> nome = $nome;
     }
-    public function setPreco($preco){
-        $this -> preco = $preco;
-    }
-    public function setQuant($quantidade){
-        $this -> quantidade = $quantidade;
-    }
-    #getters
-    public function getId(){
-        return $this -> id;
-    }
-    public function getCat(){
-        return $this -> categoria_id;
-    }
     public function getNome(){
         return $this -> nome;
+    }
+    public function setPreco($preco){
+        $this -> preco = $preco;
     }
     public function getPreco(){
         return $this->preco;
     }
-
     public function setQuantidade($quantidade){
-        $this->quantidade = $quantidade;
+        $this -> quantidade = $quantidade;
     }
     public function getQuantidade(){
         return $this->quantidade;
@@ -65,15 +60,15 @@ class Produto implements crud{
 
     public function adicionar(){    //C
         $sql = "INSERT INTO produtos (categoria_id, nome, preco, quantidade)
-                VALUES (?, ?, ?, ?)";       
+                VALUES (:categoria_id, :nome, :preco, :quantidade)";       
                 
             try{        //try-catch serve como if else, só que usado pra tratar erros e mostrar só uma mensagem
                 $conexao = DB::conexao();
                 $stmt = $conexao->prepare($sql); //$stmt =  STATEMANT
-                $stmt->bindParam(1, $this->categoria_id);
-                $stmt->bindParam(2, $this->nome);
-                $stmt->bindParam(3, $this->preco);
-                $stmt->bindParam(4, $this->quantidade); //os numeros representam a ordem dos "?"
+                $stmt->bindParam(':categoria_id', $this->categoria_id);
+                $stmt->bindParam(':nome', $this->nome);
+                $stmt->bindParam(':preco', $this->preco);
+                $stmt->bindParam('quantidade', $this->quantidade); //os numeros representam a ordem dos "?"
                 $stmt->execute();
             }catch(PDOException $e){
                 echo "Erro na Função Adicionar Produto:" .$e->getMessage();
@@ -102,7 +97,25 @@ class Produto implements crud{
         }
         return false;
     }
-    public function atualizar(){}    //U
-    public function excluir(){}      //D
-
+    public function atualizar(){            //UPDATE
+        if($this->id){
+        $slq = "UPDATE produtos SET nome = :nome, categoria_id = :categoria_id, preco = :preco, quantidade = :quantidade WHERE id = :id";
+        $stmt = DB::conexao()->prepare($sql);
+        $stmt->bindParam(':nome', $this->nome);
+        $stmt->bindParam(':categoria_id', $this->categoria_id);
+        $stmt->bindParam(':preco', $this->preco);
+        $stmt->bindParam(':quantidade', $this->quantidade);
+        $stmt->bindParam(':id', $this->id);
+        $stmt->execute();
+        }
+    }
+    public function excluir(){              //DELETE
+        if($this->id){
+            $sql = "DELETE FROM produtos WHERE id = :id";
+            $stmt = DB::conexao()->prepare($sql);
+            $stmt->bindParam(':id', $this->id);
+            $stmt->execute();
+        }
+    } 
 }
+?>
