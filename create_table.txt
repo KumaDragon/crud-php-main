@@ -1,0 +1,88 @@
+ENTRAR NO BANCO DE DADOS: tem que ir no laragon, no terminal do próprio laragon
+
+mysql -u root -p
+não tem senha, só dar enter
+
+mostrar todos os bancos de dados
+SHOW DATABASES;
+
+selecionar o banco de dados:
+USE nome_do_banco;
+
+mostrar as tabelas:
+SHOW TABLES;
+
+
+verificar estrutura da tabela:
+DESC nome_do_banco;
+
+
+criar tabela:
+CREATE TABLE pessoas(
+	id int PRIMARY KEY auto_increment,
+	nome varchar(30),
+	nascimento date,
+	sexo char(1),
+	peso float,
+	altura float,
+	nacionalidade varchar(20)
+);
+
+inserir dados:
+
+
+INSERT INTO nome_tabela (lista-de-campos) VALUES (lista-dados)
+EX:  INSERT INTO categorias (nome) VALUES ("Quadrinhos");
+
+EX:  INSERT INTO pessoas (nome, nascimento, sexo, peso, altura, nacionalidade) 
+VALUES
+('Gilberto', '1983-01-02', 'M', '78.5', '1.80', 'Brasil');
+
+INSERT INTO pessoas (nome, nascimento, sexo, peso, altura, nacionalidade) 
+VALUES
+('Rebecca', '2018-04-13', 'F', '22.5', '1.05', 'EUA');
+
+INSERT INTO pessoas (nome, nascimento, sexo, peso, altura, nacionalidade) 
+VALUES
+('Beatriz', '1988-04-13', 'F', '59.2', '1.65', 'Mexico');
+
+INSERT INTO pessoas (nome, nascimento, sexo, peso, altura, nacionalidade) 
+VALUES
+('Thales', '1997-03-05', 'M', '110.2', '1.74', 'Brasil');
+
+
+EX: INSERT INTO produtos(categoria_id, nome, preco, quantidade) 
+VALUES
+('3', 'Gantz', '11.00', '15');
+
+
+ver os dados: 
+SELECT * (ou campo) FROM nome_tabela;
+
+EX: SELECT nome, sexo FROM pessoas;
+
+ver dados específicos:
+SELECT * FROM nome_do_banco WHERE lista_de_campo = lista_de_dados;
+
+EX: SELECT * FROM produtos WHERE id=4;
+
+alterar:
+UPDATE nome_tabela SET dados(etc) WHERE id=;
+
+UPDATE pessoas SET
+peso="80.5",
+altura="1.85"
+WHERE id=1;
+
+apagar:
+DELETE FROM nome_tabela WHERE condição;
+
+DELETE FROM pessoas WHERE id=4;
+
+zerar registro da tabela:
+TRUNCATE TABLE  nome_tabela;
+
+apagar tudo:
+DROP tipo_do_objeto nome_do_objeto;
+DROP TABLE pessoas; //apaga toda a tabela
+DROP DATABASE cadastro; //apaga o BD inteiro
