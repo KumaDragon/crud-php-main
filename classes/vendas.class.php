@@ -79,7 +79,7 @@
                     $stmt->bindParam(':data_venda', $this->data_venda);
                     $stmt->execute();
                 }catch(PDOException $e){
-                    echo "Erro na Função Realizar Venda:" .$e->getMessage();
+                    echo "Erro ao realizar venda: " .$e->getMessage();
                 }
                 }
         public static function listar(){        //READ

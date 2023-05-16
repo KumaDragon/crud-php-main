@@ -71,18 +71,19 @@ class Produto implements crud{
                 $stmt->bindParam('quantidade', $this->quantidade); //os numeros representam a ordem dos "?"
                 $stmt->execute();
             }catch(PDOException $e){
-                echo "Erro na Função Adicionar Produto:" .$e->getMessage();
+                echo "Erro ao adicionar Produto:" .$e->getMessage();
             }
             }  
 
 
     public static function listar(){   //R
         $sql = "SELECT * FROM produtos";
-        $conexao = DB::conexao();
-        $stmt = $conexao->prepare($sql);
-        $stmt->execute();
-        $registros = $stmt->fetchAll(PDO::FETCH_ASSOC); //os registros que vem do bd tá na $registros e o fetchall é o que traz os dados do bd
-        if($registros){
+        try{
+            $conexao = DB::conexao();
+            $stmt = $conexao->prepare($sql);
+            $stmt->execute();
+            $registros = $stmt->fetchAll(PDO::FETCH_ASSOC); //os registros que vem do bd tá na $registros e o fetchall é o que traz os dados do bd
+            if($registros){
                 $objetos = array();   //foreach serve para tratar arrays, $objetos vai guardar e transformar para objetos
                 foreach($registros as $registro){  //esse foreach vai se repetir pra cada objeto, pegando todos os dados
                     $temporario = new Produto();
@@ -96,10 +97,14 @@ class Produto implements crud{
             return $objetos;
         }
         return false;
+    }catch(PDOException $e){
+        echo "Erro ao exibir produto:" .$e->getMessage();
     }
-    public function atualizar(){            //UPDATE
+    }
+    public function atualizar(){            //UPDATE 
         if($this->id){
         $slq = "UPDATE produtos SET nome = :nome, categoria_id = :categoria_id, preco = :preco, quantidade = :quantidade WHERE id = :id";
+        try{
         $stmt = DB::conexao()->prepare($sql);
         $stmt->bindParam(':nome', $this->nome);
         $stmt->bindParam(':categoria_id', $this->categoria_id);
@@ -107,14 +112,24 @@ class Produto implements crud{
         $stmt->bindParam(':quantidade', $this->quantidade);
         $stmt->bindParam(':id', $this->id);
         $stmt->execute();
+        
+        }catch(PDOException $e){
+            echo "Erro ao atualizar produto:" .$e->getMessage();
+        }
         }
     }
     public function excluir(){              //DELETE
+        
         if($this->id){
             $sql = "DELETE FROM produtos WHERE id = :id";
+        try{
             $stmt = DB::conexao()->prepare($sql);
             $stmt->bindParam(':id', $this->id);
             $stmt->execute();
+        
+        }catch(PDOException $e){
+            echo "Erro ao excluir produto:" .$e->getMessage();
+        }
         }
     } 
 }

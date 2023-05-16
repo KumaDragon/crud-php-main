@@ -10,10 +10,10 @@
 
         public function __construct($id=false){
             if($id){
-                $sql = "SELECT * FROM vendedores where id = ?";
+                $sql = "SELECT * FROM vendedores where id = :id";
                 $conexao = DB::conexao();
                 $stmt = $conexao->prepare($sql);
-                $stmt->bindParam(1, $id, PDO::PARAM_INT);
+                $stmt->bindParam(':id', $id, PDO::PARAM_INT);
                 $stmt->execute();
                 foreach($stmt as $obj){
                     $this->setId($obj['id']);
