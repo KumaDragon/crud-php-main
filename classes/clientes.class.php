@@ -90,8 +90,8 @@
                         $objetos[] = $temporario;
                     }
                 return $objetos;
-                }
                 return false;
+                }       
 
         public function atualizar(){            //UPDATE
             if($this->id){

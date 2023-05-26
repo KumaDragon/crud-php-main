@@ -66,7 +66,7 @@ class Categoria implements crud{
         }
         return false;
     }
-    -
+
     public function atualizar(){            //UPDATE
         if($this->id){
             $slq = "UPDATE categorias SET nome = :nome WHERE id = :id"; //Essa é uma outra forma de fazer, tirando os "?" porém funciona do msm jeito

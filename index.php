@@ -1,6 +1,5 @@
 <?php
-    include_once('classes/produto.class.php');
-    include_once('classes/categoria.class.php');
+    include_once('paginas/categoria1/listar1.php');
 
     //$categoria = new Categoria();
     //echo $produto->getId(). "<br>";
@@ -18,7 +17,7 @@
     //$produto->setQuantidade(2000);
     //$produto->adicionar();
 
-    $produtos = Produto::Listar(); // esse aqui é pra listar tudo que tem no banco crud
+    /*$produtos = Produto::Listar(); // esse aqui é pra listar tudo que tem no banco crud
     if($produtos){  //já que isso é um array, usar foreach pra quebrar e ler tudo que ele pegar
         foreach($produtos as $produto){
             echo $produto->getId(). "</br>";
@@ -31,5 +30,5 @@
 
         }
     }
-
+    */
 ?>
